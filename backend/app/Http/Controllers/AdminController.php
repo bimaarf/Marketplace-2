@@ -94,6 +94,9 @@ class AdminController extends Controller
             $__checkout         = Checkout::where('created_at', $created_at)->get();
             foreach ($__checkout as $_checkout)
             {
+                $_product = Product::find($_checkout->product_id);
+                $_product->stock = $_product->stock - $_checkout->quantity;
+                $_product->update();
                 $_checkout->status = 'paid';
                 $_checkout->update();
             }

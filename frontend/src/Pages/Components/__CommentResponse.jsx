@@ -48,7 +48,7 @@ export const CommentResponse = ({ item, getReply, getCommentAPI }) => {
             {/* dotted icon */}
             <label
               htmlFor={`modal-detail-comment${item.id}`}
-              className="text-gray-500 hover:text-green-500 cursor-pointer w-1/12">
+              className="text-gray-500 hover:text-sky-500 cursor-pointer w-1/12">
               <i className="fa fa-ellipsis-v font-light" aria-hidden="true"></i>
             </label>
             {/* Modal detail comment */}
@@ -74,14 +74,16 @@ export const CommentResponse = ({ item, getReply, getCommentAPI }) => {
                       value={formInput.message}
                       type="text"
                       name="message"
-                      className="form-control focus:border-green-500 w-full px-2 py-1.5 rounded-l text-sm outline-none border"
+                      className="form-control focus:border-gray-700 border-gray-700 bg-gray-700 text-white w-full px-2 py-1.5 rounded-l text-sm outline-none border"
                       placeholder="Ketikkan komentar..."
                     />
                     <button
                       disabled={loadSubmit ? true : false}
-                      onClick={handleSubmit}
                       type="submit"
-                      className="fa fa-paper-plane active:border-green-500 text-green-500 hover:bg-gray-100 duration-300 border border-l-0 rounded-r p-2.5"></button>
+                      onClick={handleSubmit}
+                      className="">
+                      <i className="fa fa-paper-plane active:border-gray-700 border-gray-700 bg-gray-700 text-gray-300 hover:bg-sky-700 duration-300 border border-l-0 rounded-r p-2.5"></i>
+                    </button>
                   </form>
                 )}
               </>

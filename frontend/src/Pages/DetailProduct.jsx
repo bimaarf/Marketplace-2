@@ -12,7 +12,6 @@ import { CircleMenu } from "./___CircleMenu";
 export const DetailProduct = ({ setAuthCheck, authCheck }) => {
   const { slug } = useParams();
   const location = useLocation();
-
   const [getProduct, setProduct] = useState("");
   const [getComment, setComment] = useState("");
   const [getReply, setReply] = useState("");
@@ -238,6 +237,7 @@ export const DetailProduct = ({ setAuthCheck, authCheck }) => {
                           placeholder="Ketikkan komentar..."
                         />
                         <button
+                          disabled={loadSubmit ? true : false}
                           type="submit"
                           onClick={handleSubmitComment}
                           className="">

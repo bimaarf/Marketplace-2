@@ -16,7 +16,7 @@ export const DetailCheckout = ({ setAuthCheck, authCheck }) => {
     new Intl.NumberFormat("id-IN", {
       style: "currency",
       currency: "IDR",
-      maximumSignificantDigits: 3,
+      maximumSignificantDigits: 10,
     }).format(value);
 
   const getCheckoutAPI = async () => {
@@ -74,7 +74,7 @@ export const DetailCheckout = ({ setAuthCheck, authCheck }) => {
   };
   return (
     <>
-      <div className="overflow-hidden">
+      <div className="overflow-hidden bg-slate-900">
         <Headers setAuthCheck={setAuthCheck} authCheck={authCheck} />
         <div className="xl:container md:container-lg md:px-10 xl:px-44 mx-2 xl:mx-auto mt-4 md:mt-20">
           {getDateFilter &&
@@ -130,7 +130,7 @@ export const DetailCheckout = ({ setAuthCheck, authCheck }) => {
                             Konfirmasi Pesanan
                           </button>
                         )}
-                     
+
                       {getCheckout.length > 0 &&
                         filter.split("//")[1] === "paid" && (
                           <button

@@ -20,7 +20,7 @@ export const Category = ({ setAuthCheck, authCheck }) => {
     getCategoryAPI();
   }, []);
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden bg-slate-900">
       <Headers setAuthCheck={setAuthCheck} authCheck={authCheck} />
       <div className="md:container md:mx-auto pb-10 md:pt-10">
         <div className="md:flex md:columns-2 md:gap-10">
