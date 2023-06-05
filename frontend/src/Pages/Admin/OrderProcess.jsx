@@ -26,7 +26,7 @@ export const OrderProcess = ({ setAuthCheck, authCheck }) => {
           <div className="md:flex md:columns-2 md:gap-10">
             <HeaderMenu />
             <SidebarAdminDesktop setAuthCheck={setAuthCheck} />
-            <div className="bg-slate-200 bg-opacity-30 rounded-xl w-full p-3 md:p-10 ">
+            <div className="bg-slate-700 bg-opacity-30 rounded-xl w-full p-3 md:p-10 ">
               <table className="table w-full">
                 <thead>
                   <tr>

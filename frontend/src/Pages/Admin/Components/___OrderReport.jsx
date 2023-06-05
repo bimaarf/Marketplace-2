@@ -17,7 +17,7 @@ export const OrderReport = () => {
     new Intl.NumberFormat("id-IN", {
       style: "currency",
       currency: "IDR",
-      maximumSignificantDigits: 3,
+      maximumSignificantDigits: 10,
     }).format(value);
   useEffect(() => {
     getReportAPI();
@@ -26,7 +26,7 @@ export const OrderReport = () => {
     <>
       <div className="mt-10">
         <div className="flex justify-between items-center">
-          <h1 className="font-medium text-2xl">Laporan Penjualan</h1>
+          <h1 className="font-medium text-2xl text-gray-300">Laporan Penjualan</h1>
           <ReactToPrint
             trigger={() => {
               return (
@@ -58,7 +58,7 @@ export const OrderReport = () => {
                 <tr>
                   <td>{key + 1}.</td>
                   <td>Yoseph</td>
-                  <td>{item.title}</td>
+                  <td><p className="whitespace-pre-wrap">{item.title}</p></td>
                   <td>10-09-2022</td>
                   <td>{item.quantity}</td>
                   <td>{numberFormat(item.total)}</td>
