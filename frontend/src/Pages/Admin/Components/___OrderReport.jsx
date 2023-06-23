@@ -6,6 +6,11 @@ import ReactToPrint from "react-to-print";
 export const OrderReport = () => {
   const componentRef = useRef();
   const [getReport, setReport] = useState("");
+  const [getDate, setDate] = useState({ date: "" });
+  const onChangeDate = (e) => {
+    e.persist();
+    setDate({ ...getDate, [e.target.name]: e.target.value });
+  };
   const getReportAPI = async () => {
     await axios.get("sanctum/csrf-cookie").then(() => {
       axios.get("api/order-report/get").then((res) => {
@@ -26,7 +31,9 @@ export const OrderReport = () => {
     <>
       <div className="mt-10">
         <div className="flex justify-between items-center">
-          <h1 className="font-medium text-2xl text-gray-300">Laporan Penjualan</h1>
+          <h1 className="font-medium text-2xl text-gray-300">
+            Laporan Penjualan
+          </h1>
           <ReactToPrint
             trigger={() => {
               return (
@@ -39,7 +46,15 @@ export const OrderReport = () => {
             content={() => componentRef.current}
           />
         </div>
-
+        <label htmlFor="date">Pilih Periode</label>
+        <br />
+        <input
+          type="date"
+          className="w-1/2 py-1 outline-none border focus:border-green-500"
+          name="date"
+          id="date"
+          onChange={onChangeDate}
+        />
         <table ref={componentRef} className="w-full table mt-4">
           <thead>
             <tr>
@@ -52,25 +67,49 @@ export const OrderReport = () => {
               <th>Aksi</th>
             </tr>
           </thead>
-          {getReport &&
-            getReport.map((item, key) => (
-              <tbody key={key}>
-                <tr>
-                  <td>{key + 1}.</td>
-                  <td>Yoseph</td>
-                  <td><p className="whitespace-pre-wrap">{item.title}</p></td>
-                  <td>10-09-2022</td>
-                  <td>{item.quantity}</td>
-                  <td>{numberFormat(item.total)}</td>
-                  <td>
-                    <OrderReportModal item={item} />
-                    <label
-                      htmlFor={`order-report-modal${item.id}`}
-                      className="fa fa-eye bg-yellow-500 hover:bg-yellow-600 px-4 py-1 cursor-pointer text-white rounded"></label>
-                  </td>
-                </tr>
-              </tbody>
-            ))}
+          {getReport && getDate.date === ""
+            ? getReport.map((item, key) => (
+                <tbody key={key}>
+                  <tr>
+                    <td>{key + 1}.</td>
+                    <td>{item.name}</td>
+                    <td>
+                      <p className="whitespace-pre-wrap">{item.title}</p>
+                    </td>
+                    <td>{item.created_at.split("T")[0]}</td>
+                    <td>{item.quantity}</td>
+                    <td>{numberFormat(item.total)}</td>
+                    <td>
+                      <OrderReportModal item={item} />
+                      <label
+                        htmlFor={`order-report-modal${item.id}`}
+                        className="fa fa-eye bg-yellow-500 hover:bg-yellow-600 px-4 py-1 cursor-pointer text-white rounded"></label>
+                    </td>
+                  </tr>
+                </tbody>
+              ))
+            : getReport &&
+              getReport.map(
+                (item, key) =>
+                  getDate.date === item.created_at.split("T")[0] && (
+                    <tbody key={key}>
+                      <tr>
+                        <td>{key + 1}.</td>
+                        <td>{item.name}</td>
+                        <td>{item.title}</td>
+                        <td>{item.created_at.split("T")[0]}</td>
+                        <td>{item.quantity}</td>
+                        <td>{numberFormat(item.total)}</td>
+                        <td>
+                          <OrderReportModal item={item} />
+                          <label
+                            htmlFor={`order-report-modal${item.id}`}
+                            className="fa fa-eye bg-yellow-500 hover:bg-yellow-600 px-4 py-1 cursor-pointer text-white rounded"></label>
+                        </td>
+                      </tr>
+                    </tbody>
+                  )
+              )}
         </table>
       </div>
     </>

@@ -80,6 +80,7 @@ export const Cart = ({ setAuthCheck, authCheck }) => {
       handleCostCheck();
     }
     e.persist();
+    console.log(e.target.value);
     setFormAddress({ ...formAddress, [e.target.name]: e.target.value });
   };
   const getProvinceAPI = async () => {
@@ -99,6 +100,7 @@ export const Cart = ({ setAuthCheck, authCheck }) => {
 
   const [costType, setCostType] = useState("");
   const [costValue, setCostValue] = useState("");
+  const [costValueGojek, setCostValueGojek] = useState("");
   const [costCourier, setCostCourier] = useState("");
   const [costCourierT, setCostCourierT] = useState("");
 
@@ -176,6 +178,7 @@ export const Cart = ({ setAuthCheck, authCheck }) => {
                         setCostCourier(item.service);
                         setCostCourierT(item.description);
                         setCostValue(item.cost[0].value);
+                        setCostValueGojek(false);
                       }}
                       key={key}
                       className={`${
@@ -208,6 +211,36 @@ export const Cart = ({ setAuthCheck, authCheck }) => {
                           {numberFormat(item.cost[0].value)}
                         </h1>
                       )}
+                    </div>
+                  ))}
+                {formAddress.city === "364" ||
+                  (formAddress.city === "365" && (
+                    <div
+                      onClick={() => {
+                        setCostCourier("Gojek");
+                        setCostCourierT("instan");
+                        setCostValue(0);
+                        setCostValueGojek(true);
+                      }}
+                      className={`${
+                        costValueGojek ? "bg-slate-200" : "bg-slate-50"
+                      } border p-2 mt-0.5 cursor-pointer hover:bg-slate-100 flex justify-between items-center gap-2`}>
+                      <div>
+                        <div className="flex justify-start items-center gap-1 text-sm">
+                          <img
+                            width={40}
+                            src="https://static-00.iconduck.com/assets.00/gojek-icon-512x512-dyy6mlv4.png"
+                            alt=""
+                          />
+
+                          <h1 className="text-green-600 text-xl font-bold">
+                            Gojek
+                          </h1>
+                        </div>
+                        <p className="text-xs text-gray-600">
+                          (instant) est: 1 hari
+                        </p>
+                      </div>
                     </div>
                   ))}
                 <div className="text-sm flex justify-between my-4 items-center gap-2">

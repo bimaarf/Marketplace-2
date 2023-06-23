@@ -116,16 +116,37 @@ export const OrderSend = ({ setAuthCheck, authCheck }) => {
                   </div>
                   {getCheckout.length > 0 && (
                     <div className="w-full border p-2 my-4 text-gray-600">
-                      <h1>Tujuan Alamat : {getAddress[filterKey]}</h1>
+                      <h1>
+                        Tujuan Alamat :{" "}
+                        {!getAddress[filterKey]
+                          ? getAddress[filterKey - filterKey]
+                          : getAddress[filterKey]}
+                      </h1>
                       <div className="flex justify-start items-center gap-1 text-sm">
-                        <img
-                          width={40}
-                          src="https://jnewsonline.com/wp-content/uploads/2021/11/Foto-2-Naskah-Mengenal-Sosok-Kreator-Logo-%E2%80%98Biru-Tua-Merah-JNE.jpg"
-                          alt=""
-                        />
-                        <h1 className="text-red-600 font-bold">
-                          {getCourier[filterKey].split("//")[1]}
-                        </h1>
+                        {getCourier[filterKey].split("//")[1] ===
+                        "Gojek (instan)" ? (
+                          <>
+                            <img
+                              width={40}
+                              src="https://static-00.iconduck.com/assets.00/gojek-icon-512x512-dyy6mlv4.png"
+                              alt=""
+                            />
+                            <h1 className="text-green-600 font-bold">
+                              {getCourier[filterKey].split("//")[1]}
+                            </h1>
+                          </>
+                        ) : (
+                          <>
+                            <img
+                              width={40}
+                              src="https://jnewsonline.com/wp-content/uploads/2021/11/Foto-2-Naskah-Mengenal-Sosok-Kreator-Logo-%E2%80%98Biru-Tua-Merah-JNE.jpg"
+                              alt=""
+                            />
+                            <h1 className="text-red-600 font-bold">
+                              {getCourier[filterKey].split("//")[1]}
+                            </h1>
+                          </>
+                        )}
                       </div>
                     </div>
                   )}
