@@ -21,16 +21,5 @@ class UserAssignSeeder extends Seeder
         $_admin->addRole($administrator);
         $_user = User::where('email', 'user@gmail.com')->first();
         $_user->addRole($user);
-        UserDetail::insert([
-            [
-                'user_id' => $_admin->id,
-                'no_telp' => '-',
-            ],
-            [
-                'user_id' => $_user->id,
-                'no_telp' =>'-',
-            ]
-
-        ]);
     }
 }

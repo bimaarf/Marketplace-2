@@ -6,7 +6,7 @@ import ReactToPrint from "react-to-print";
 export const OrderReport = () => {
   const componentRef = useRef();
   const [getReport, setReport] = useState("");
-  const [getDate, setDate] = useState({ date: "" });
+  const [getDate, setDate] = useState({ fromDate: "", toDate: "" });
   const onChangeDate = (e) => {
     e.persist();
     setDate({ ...getDate, [e.target.name]: e.target.value });
@@ -46,15 +46,33 @@ export const OrderReport = () => {
             content={() => componentRef.current}
           />
         </div>
-        <label htmlFor="date">Pilih Periode</label>
-        <br />
-        <input
-          type="date"
-          className="w-1/2 py-1 outline-none border focus:border-green-500"
-          name="date"
-          id="date"
-          onChange={onChangeDate}
-        />
+        <label htmlFor="fromDate">Pilih Periode</label>
+        <div className="flex justify-start items-center gap-2">
+          <div className="w-full">
+            <input
+              type="date"
+              className="p-1 w-full outline-none border focus:border-green-500"
+              name="fromDate"
+              id="fromDate"
+              onChange={onChangeDate}
+            />
+          </div>
+          <p className="w-fit">s/d</p>
+          <div className="w-full">
+            <input
+              type="date"
+              className="p-1 w-full outline-none border focus:border-green-500"
+              name="toDate"
+              id="toDate"
+              onChange={onChangeDate}
+            />
+          </div>
+        </div>
+        <p className="text-white">
+        {getDate.fromDate}
+        {getDate.toDate}
+
+        </p>
         <table ref={componentRef} className="w-full table mt-4">
           <thead>
             <tr>
@@ -91,7 +109,8 @@ export const OrderReport = () => {
             : getReport &&
               getReport.map(
                 (item, key) =>
-                  getDate.date === item.created_at.split("T")[0] && (
+                  item.created_at.split("T")[0] >= getDate.fromDate &&
+                  item.created_at.split("T"[0] <= getDate.toDate) && (
                     <tbody key={key}>
                       <tr>
                         <td>{key + 1}.</td>
@@ -109,6 +128,8 @@ export const OrderReport = () => {
                       </tr>
                     </tbody>
                   )
+                //
+                //
               )}
         </table>
       </div>

@@ -15,7 +15,7 @@ class CartController extends Controller
         $__cart                    = Cart::join('tb_product', 'tb_product.id', 'tb_cart.product_id')
                                         ->join('tb_product_discount', 'tb_product_discount.product_id', 'tb_product.id')
                                     ->where('user_id', Auth::id())
-                                    ->get(['tb_cart.*', 'tb_product.title', 'tb_product.price', 'tb_product.image', 'tb_product_discount.special_price']);
+                                    ->get(['tb_cart.*', 'tb_product.title', 'tb_product.stock', 'tb_product.price', 'tb_product.image', 'tb_product_discount.special_price']);
         $__total = 0;
         foreach ($__cart as $_cart)
         {
@@ -76,6 +76,13 @@ class CartController extends Controller
             $__product              = Product::where('slug', $slug)->first();
             $__discount             = ProductDiscount::where('product_id', $__product->id)->first();
             $___cart                = Cart::where('product_id', $__product->id)->first();
+            if ($__product->stock <= 0)
+            {
+                return response()->json([
+                    'status' => 202,
+                    'message' => 'error'
+                ]);
+            }
             if ($___cart)
             {
                 $___cart->notes      = $request->notes;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Checkout;
 use App\Models\City;
+use App\Models\Product;
 use App\Models\Province;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -171,7 +172,7 @@ class CheckoutController extends Controller
        try {
             $__unpaid = Checkout::where('status', 'unpaid')
                                 ->where('user_id', Auth::id())
-                                ->where('created_at', $created_at)
+                                ->where('created_at',  $created_at)
                                 ->get();
             foreach($__unpaid as $_unpaid)
             {
@@ -210,8 +211,14 @@ class CheckoutController extends Controller
             $__checkout->city       = $_get_city->city_name;
             $__checkout->address    = $request->address;
             $__checkout->user_id    = Auth::id();
-            $__checkout->save();
-            $_cart->delete();
+            $__order = Product::find($__checkout->product_id);
+            if ($__order->stock > 0)
+            {
+                $__checkout->save();
+                $__order->stock     = $__order->stock - $__checkout->quantity;
+                $__order->update();
+                $_cart->delete();
+            }
         }
         return response()->json([
             'status' => 200,

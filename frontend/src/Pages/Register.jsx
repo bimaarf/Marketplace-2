@@ -49,6 +49,8 @@ export const Register = ({ setAuthCheck }) => {
     await axios.get("sanctum/csrf-cookie").then(() => {
       axios.post("api/register", data).then((res) => {
         setLoadSubmit(false);
+        if (res.data.status === 201)
+        return toast.error("Username min:4 huruf");
         if (res.data.status === 202)
           return toast.error("Masukkan data dengan benar");
         if (res.data.status === 101)

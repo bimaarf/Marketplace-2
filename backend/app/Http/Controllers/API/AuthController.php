@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Checkout;
 use App\Models\User;
-use App\Models\UserDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,6 +17,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:191|min:4',
             'email' => 'required|email|max:191',
+            'no_telp' => 'required|max:20',
             'password' => 'required|min:4',
             'password_confirmation' => 'required|min:4',
         ]);
@@ -39,8 +38,6 @@ class AuthController extends Controller
                 $_no_telp = '0'.substr(trim($__no_telp), 2);
             }
         }
-        $_user_detail = UserDetail::where('no_telp', $_no_telp)->get();
-
         if ($user) {
             return response()->json([
                 'status' => 202,
@@ -50,27 +47,18 @@ class AuthController extends Controller
 
             if ($validator->fails()) {
                 return response()->json([
+                    'status' => 201,
                     'validation_errors' => $validator->errors(),
                 ]);
             } else {
-                if (count($_user_detail) > 0) {
-                    return response()->json([
-                        'status' => 203,
-                        'message' => 'phone number has been registered!'
-                    ]);
-                }
-
                 if ($request->password === $request->password_confirmation) {
 
                     $user = User::create([
                         'name' => $request->name,
                         'email' => $request->email,
+                        'no_telp' => $_no_telp,
                         'password' => Hash::make($request->password),
                     ]);
-                    $_detail            = new UserDetail();
-                    $_detail->no_telp   = $_no_telp;
-                    $_detail->user_id   = $user->id;
-                    $_detail->save();
                     $user->addRole('user');
 
                 $token = $user->createToken($user->email . '_Token')->plainTextToken;

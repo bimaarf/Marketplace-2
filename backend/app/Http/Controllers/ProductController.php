@@ -21,7 +21,7 @@ class ProductController extends Controller
         $__product = Product::join('tb_product_discount', 'tb_product_discount.product_id', 'tb_product.id')
                     ->join('tb_product_detail', 'tb_product_detail.product_id', 'tb_product.id')
                     ->orderBy('tb_product_detail.activity', 'DESC')
-                    ->take(6)
+                    ->take(5)
                     ->get(['tb_product.*', 'tb_product_discount.special_price', 'tb_product_detail.ulasan', 'tb_product_detail.activity']);
         return $__product;
     }
@@ -137,7 +137,7 @@ class ProductController extends Controller
             'price' => 'required',
             'stock' => 'required',
             'category_id' => 'required',
-            'image.*' => 'required|image|mimes:jpeg,jpg,png,webp',
+            'image.*' => 'required|image|mimes:jpeg,jpg,png',
         ]);
         if ($validator->fails())
         {

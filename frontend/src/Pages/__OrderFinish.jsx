@@ -1,10 +1,12 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { Headers } from "../Components/_Header";
 import { HorizontalMenu } from "./___HorizontalMenu";
 import { CircleMenu } from "./___CircleMenu";
+import ReactToPrint from "react-to-print";
 export const OrderFinish = ({ setAuthCheck, authCheck }) => {
+  const componentRef = useRef();
   const [loadFetch, setLoadFetch] = useState(false);
   const [getTotal, setTotal] = useState("");
   const [getCheckout, setCheckout] = useState("");
@@ -60,6 +62,7 @@ export const OrderFinish = ({ setAuthCheck, authCheck }) => {
           getDateFilter.map((filter, filterKey) => {
             return (
               <div
+                ref={componentRef}
                 key={filterKey}
                 className="flex-row-reverse md:flex justify-center items-start gap-4 mt-4">
                 <div className="bg-slate-50 shadow-sm border border-slate-100 rounded-xl p-4 md:w-full">
@@ -71,6 +74,21 @@ export const OrderFinish = ({ setAuthCheck, authCheck }) => {
                         <h1 className="font-semibold text-lg">Sudah Sampai</h1>
                       </div>
                     </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <ReactToPrint
+                      trigger={() => {
+                        return (
+                          <a
+                            href="#"
+                            className="hover:text-orange-700 duration-300">
+                            {" "}
+                            <i className="fa fa-download"></i> Cetak Laporan
+                          </a>
+                        );
+                      }}
+                      content={() => componentRef.current}
+                    />
                   </div>
                   {getCheckout.length > 0 && (
                     <div className="w-full border p-2 my-4 text-gray-600">
