@@ -68,11 +68,6 @@ export const OrderReport = () => {
             />
           </div>
         </div>
-        <p className="text-white">
-        {getDate.fromDate}
-        {getDate.toDate}
-
-        </p>
         <table ref={componentRef} className="w-full table mt-4">
           <thead>
             <tr>
