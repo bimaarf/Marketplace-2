@@ -80,7 +80,7 @@ export const OrderReport = () => {
               <th>Aksi</th>
             </tr>
           </thead>
-          {getReport && getDate.date === ""
+          {getReport && getDate.fromDate === ""
             ? getReport.map((item, key) => (
                 <tbody key={key}>
                   <tr>
@@ -105,7 +105,7 @@ export const OrderReport = () => {
               getReport.map(
                 (item, key) =>
                   item.created_at.split("T")[0] >= getDate.fromDate &&
-                  item.created_at.split("T"[0]) <= getDate.toDate && (
+                  item.created_at.split("T")[0] <= getDate.toDate && (
                     <tbody key={key}>
                       <tr>
                         <td>{key + 1}.</td>
