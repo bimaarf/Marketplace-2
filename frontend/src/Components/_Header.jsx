@@ -163,7 +163,7 @@ export const Headers = ({
               <>
                 {getNotif.length > 0 && (
                   <div className="relative dropdown dropdown-left -mt-4 -ml-20 md:ml-0 cursor-pointer hover:text-gray-500 text-gray-300 duration-150">
-                    <label tabindex="0" class="btn m-1">
+                    <label tabIndex="0" className="btn m-1">
                       <div className="t-0 absolute right-0 top-1">
                         <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white">
                           {getNotif.length}
@@ -172,8 +172,8 @@ export const Headers = ({
                       <i className="fa fa-bell text-xl mt-2"></i>
                     </label>
                     <ul
-                      tabindex="0"
-                      class="dropdown-content menu shadow bg-base-100 rounded-box w-96">
+                      tabIndex="0"
+                      className="dropdown-content menu shadow bg-base-100 rounded-box w-96">
                       <li>
                         <div
                           className="alert bg-yellow-500 hover:bg-yellow-600"

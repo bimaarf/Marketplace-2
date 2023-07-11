@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Role;
 use App\Models\User;
-use App\Models\UserDetail;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 class UserAssignSeeder extends Seeder
@@ -21,5 +20,6 @@ class UserAssignSeeder extends Seeder
         $_admin->addRole($administrator);
         $_user = User::where('email', 'user@gmail.com')->first();
         $_user->addRole($user);
+
     }
 }

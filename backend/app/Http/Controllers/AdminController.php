@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Checkout;
 use App\Models\Product;
+use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -14,23 +16,52 @@ class AdminController extends Controller
         $__checkout         = Checkout::where('status', 'unpaid')->get();
         return $__checkout;
     }
+    function productReport() {
+        $__product          = Report::join('tb_product', 'tb_product.id', 'tb_report.product_id')
+                            ->get(['tb_product.*', 'tb_report.sales_amount']);
+        return $__product;
+    }
+    function productReportUpdate(Request $request, $id) {
+        try {
+            $__product              = Product::find($id);
+            $__report               = Report::where('product_id', $__product->id)->first();
+            $__report->sales_amount = $request->sales_amount;
+            $__report->update();
+            $__product->title       = $request->title;
+            $__product->slug        = Str::slug($request->title);
+            $__product->desc        = $request->desc;
+            $__product->price       = $request->price;
+            $__product->stock       = $request->stock;
+            $__product->category_id = $request->category_id;
+            $__product->update();
+            return response()->json([
+                'status' => 200,
+                'message' => 'success'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 201,
+                'message' => 'error'
+            ]);
+        }
+    }
     public function orderReport()
     {
-        $__checkout             = Checkout::join('tb_product', 'tb_product.id', 'tb_checkout.product_id')
-                                            ->join('tb_product_discount', 'tb_product_discount.product_id', 'tb_product.id')
-                                            ->join('users', 'users.id', 'tb_checkout.user_id')
-                                            ->where('tb_checkout.status','finish')
-                                            ->get([
-                                                'tb_checkout.*',
-                                                'users.name',
-                                                'tb_product.slug',
-                                                'tb_product.title',
-                                                'tb_product.desc',
-                                                'tb_product.stock',
-                                                'tb_product.price',
-                                                'tb_product.image',
-                                                'tb_product_discount.special_price'
-                                            ]);
+        $__checkout         = Checkout::join('tb_product', 'tb_product.id', 'tb_checkout.product_id')
+                    ->join('tb_product_discount', 'tb_product_discount.product_id', 'tb_product.id')
+                    ->join('users', 'users.id', 'tb_checkout.user_id')
+                    ->where('tb_checkout.status','finish')
+                    ->get([
+                        'tb_checkout.*',
+                        'users.name',
+                        'tb_product.slug',
+                        'tb_product.title',
+                        'tb_product.desc',
+                        'tb_product.stock',
+                        'tb_product.price',
+                        'tb_product.image',
+                        'tb_product_discount.special_price'
+                    ]);
 
         return $__checkout;
     }

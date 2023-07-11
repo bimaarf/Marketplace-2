@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\ProductDiscount;
 use App\Models\Ratting;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -117,6 +118,8 @@ class ProductController extends Controller
             }
             $__product_d->delete();
             $__product_discount->delete();
+            $__report = Report::where('product_id', $__product->id);
+            $__report->delete();
             $__product->delete();
             return response()->json([
                 'status' => 200,
@@ -181,7 +184,10 @@ class ProductController extends Controller
                 $__product_detail           = new ProductDetail();
                 $__product_detail->product_id = $__product->id;
                 $__product_detail->save();
-
+                $__report = new Report();
+                $__report->product_id   = $__product->id;
+                $__report->sales_amount = 0;
+                $__report->save();
                 return response()->json([
                     'status' => 200,
                     'messages' => 'success',

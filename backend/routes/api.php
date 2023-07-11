@@ -24,6 +24,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/product/detail/view/{slug}', [ProductController::class, 'detail']);
@@ -41,8 +44,11 @@ Route::middleware('auth:sanctum')->group(function() {
 
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::middleware('role:administrator')->group(function() {
+        Route::get('/product-report/get', [AdminController::class, 'productReport']);
+        Route::post('/product-report/update/{id}', [AdminController::class, 'productReportUpdate']);
         Route::get('/notif-report/get', [AdminController::class, 'orderNotif']);
         Route::get('/order-report/get', [AdminController::class, 'orderReport']);
+
         Route::get('/order-process/get', [AdminController::class, 'orderProcessGet']);
 
         Route::post('/category/store', [CategoryController::class, 'store']);

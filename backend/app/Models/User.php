@@ -7,10 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Laratrust\Contracts\LaratrustUser;
 use Laratrust\Traits\HasRolesAndPermissions;
 
-class User extends Authenticatable implements LaratrustUser
+class User extends Authenticatable
 {
     use HasRolesAndPermissions;
     use HasApiTokens, HasFactory, Notifiable;
@@ -45,6 +44,9 @@ class User extends Authenticatable implements LaratrustUser
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    function checkout(){
+        return $this->hasMany(Checkout::class);
+    }
     public function comment()
     {
         return $this->belongsTo(Comment::class);

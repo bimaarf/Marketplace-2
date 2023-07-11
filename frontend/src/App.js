@@ -69,70 +69,97 @@ function App() {
             path="/register"
             element={<Register setAuthCheck={setAuthCheck} />}
           />
-          <Route
-            path="/keranjang"
-            element={<Cart setAuthCheck={setAuthCheck} authCheck={authCheck} />}
-          />
-          <Route
-            path="/menunggu-konfirmasi"
-            element={
-              <OrderUnpaid setAuthCheck={setAuthCheck} authCheck={authCheck} />
-            }
-          />
-          <Route
-            path="/pesanan-dikonfirmasi"
-            element={
-              <OrderConfirmed
-                setAuthCheck={setAuthCheck}
-                authCheck={authCheck}
+          {secureLocalStorage.getItem("auth_role") ===
+            "78bc4980127963e8c55a379d3f8cdae182dfa543" && (
+            <>
+              <Route
+                path="/keranjang"
+                element={
+                  <Cart setAuthCheck={setAuthCheck} authCheck={authCheck} />
+                }
               />
-            }
-          />
-          <Route
-            path="/sampai-tujuan"
-            element={
-              <OrderFinish setAuthCheck={setAuthCheck} authCheck={authCheck} />
-            }
-          />
-          <Route
-            path="/pesanan-dikirim"
-            element={
-              <OrderSend setAuthCheck={setAuthCheck} authCheck={authCheck} />
-            }
-          />
-          <Route
-            path="/administrator/dashboard"
-            element={
-              <Dashboard setAuthCheck={setAuthCheck} authCheck={authCheck} />
-            }
-          />
-          <Route
-            path="/administrator/kategori"
-            element={
-              <Category setAuthCheck={setAuthCheck} authCheck={authCheck} />
-            }
-          />
-          <Route
-            path="/administrator/produk"
-            element={
-              <Product setAuthCheck={setAuthCheck} authCheck={authCheck} />
-            }
-          />
-          <Route
-            path="/administrator/pesanan"
-            element={
-              <OrderProcess setAuthCheck={setAuthCheck} authCheck={authCheck} />
-            }
-          />
-          <Route
-            path="/administrator/:username"
-            element={
-              <DetailCheckout
-                setAuthCheck={setAuthCheck}
-                authCheck={authCheck}
+              <Route
+                path="/menunggu-konfirmasi"
+                element={
+                  <OrderUnpaid
+                    setAuthCheck={setAuthCheck}
+                    authCheck={authCheck}
+                  />
+                }
               />
-            }
-          />
+              <Route
+                path="/pesanan-dikonfirmasi"
+                element={
+                  <OrderConfirmed
+                    setAuthCheck={setAuthCheck}
+                    authCheck={authCheck}
+                  />
+                }
+              />
+              <Route
+                path="/sampai-tujuan"
+                element={
+                  <OrderFinish
+                    setAuthCheck={setAuthCheck}
+                    authCheck={authCheck}
+                  />
+                }
+              />
+              <Route
+                path="/pesanan-dikirim"
+                element={
+                  <OrderSend
+                    setAuthCheck={setAuthCheck}
+                    authCheck={authCheck}
+                  />
+                }
+              />
+            </>
+          )}
+          {secureLocalStorage.getItem("auth_role") ===
+            "1a42443e0191c3b6dcbbdeadb50490de8c0d204a" && (
+            <>
+              <Route
+                path="/administrator/dashboard"
+                element={
+                  <Dashboard
+                    setAuthCheck={setAuthCheck}
+                    authCheck={authCheck}
+                  />
+                }
+              />
+              <Route
+                path="/administrator/kategori"
+                element={
+                  <Category setAuthCheck={setAuthCheck} authCheck={authCheck} />
+                }
+              />
+              <Route
+                path="/administrator/produk"
+                element={
+                  <Product setAuthCheck={setAuthCheck} authCheck={authCheck} />
+                }
+              />
+              <Route
+                path="/administrator/pesanan"
+                element={
+                  <OrderProcess
+                    setAuthCheck={setAuthCheck}
+                    authCheck={authCheck}
+                  />
+                }
+              />
+              <Route
+                path="/administrator/:username"
+                element={
+                  <DetailCheckout
+                    setAuthCheck={setAuthCheck}
+                    authCheck={authCheck}
+                  />
+                }
+              />
+            </>
+          )}
         </Routes>
       </Router>
     </>

@@ -6,6 +6,7 @@ import { ModalAddProduct } from "./Components/__ModalAddProduct";
 import { ModalAddCategory } from "./Components/__ModalAddCategory";
 import { HeaderMenu } from "./Components/___HeaderMenu";
 import { OrderReport } from "./Components/___OrderReport";
+import { ProductReport } from "./Components/___ProductReport";
 
 export const Dashboard = ({ setAuthCheck, authCheck }) => {
   return (
@@ -44,6 +45,7 @@ export const Dashboard = ({ setAuthCheck, authCheck }) => {
                 </div>
               </label>
             </div>
+            <ProductReport />
             <OrderReport />
           </div>
         </div>

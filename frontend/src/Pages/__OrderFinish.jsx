@@ -5,6 +5,8 @@ import { Headers } from "../Components/_Header";
 import { HorizontalMenu } from "./___HorizontalMenu";
 import { CircleMenu } from "./___CircleMenu";
 import ReactToPrint from "react-to-print";
+import LogoImg from "../Images/logo.jpg";
+
 export const OrderFinish = ({ setAuthCheck, authCheck }) => {
   const componentRef = useRef();
   const [loadFetch, setLoadFetch] = useState(false);
@@ -66,7 +68,15 @@ export const OrderFinish = ({ setAuthCheck, authCheck }) => {
                 key={filterKey}
                 className="flex-row-reverse md:flex justify-center items-start gap-4 mt-4">
                 <div className="bg-slate-50 shadow-sm border border-slate-100 rounded-xl p-4 md:w-full">
-                  <div className="flex justify-between items-center">
+                <div className="bg-cyan-800 p-10">
+                    <div className="flex justify-start gap-1 items-center">
+                      <img src={LogoImg} width={100} alt="" />
+                      <p className="text-white font-bold text-xl">
+                        Aceesoris.id
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center mt-4">
                     <div className="flex justify-start items-center gap-2">
                       <div className=" text-black flex justify-start gap-2 items-center">
                         <i className="fa fa-map-marker"></i>

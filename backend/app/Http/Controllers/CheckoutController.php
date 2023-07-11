@@ -7,6 +7,7 @@ use App\Models\Checkout;
 use App\Models\City;
 use App\Models\Product;
 use App\Models\Province;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RajaOngkir;
@@ -217,6 +218,9 @@ class CheckoutController extends Controller
                 $__checkout->save();
                 $__order->stock     = $__order->stock - $__checkout->quantity;
                 $__order->update();
+                $__report = Report::where('product_id', $__order->id)->first();
+                $__report->sales_amount = $__report->sales_amount + $_cart->quantity;
+                $__report->update();
                 $_cart->delete();
             }
         }

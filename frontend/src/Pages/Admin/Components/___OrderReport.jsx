@@ -105,7 +105,7 @@ export const OrderReport = () => {
               getReport.map(
                 (item, key) =>
                   item.created_at.split("T")[0] >= getDate.fromDate &&
-                  item.created_at.split("T"[0] <= getDate.toDate) && (
+                  item.created_at.split("T"[0]) <= getDate.toDate && (
                     <tbody key={key}>
                       <tr>
                         <td>{key + 1}.</td>
